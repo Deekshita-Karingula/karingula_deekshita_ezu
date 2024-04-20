@@ -1,0 +1,26 @@
+{% extends 'courseinfo/base.html' %}
+
+{% block title %}
+    Error Deleting Student
+{% endblock %}
+
+{% block content %}
+    <div>
+        <h2>Error Deleting Student</h2>
+        <p>
+            You may not delete student {{ student }}.  This
+            student currently registered in the following
+            sections:
+        </p>
+
+         <ul>
+            {% for registration in registrations %}
+            <li><a href="{{ registration.get_absolute_url }}">{{ registration }}</a></li>
+            {%  endfor %}
+        </ul>
+
+        <p>
+            Return to <a href="{% url 'courseinfo_student_list_urlpattern' %}">Student List</a>.
+        </p>
+    </div>
+{% endblock %}

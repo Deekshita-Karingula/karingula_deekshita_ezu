@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            title is provided by inheriting templates
+        {% endblock %}
+    </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--[if IE]><script
+      src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
+    </script><![endif]-->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'coursinfo/normalize.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'courseinfo/skeleton.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'courseinfo/style.css' %}">
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+
+<div class="container">
+    <div class="status row">
+        <div class="offset-by-eight four columns">
+            <ul class="inline">
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout_urlpattern' %}">
+                        Log Out, {{ user.get_username }}</a></li>
+                {% else %}
+                    <li><a href="{% url 'login_urlpattern' %}">
+                        Log In</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <header class="row">
+        <div class="offset-by-one ten columns">
+            <h1 class="logo">EZ University</h1>
+            <h2>Course Information System</h2>
+        </div>
+    </header>
+    <nav>
+        <ul>
+            {% if perms.courseinfo.view_instructor %}
+                <li>
+                    <a href="{% url 'courseinfo_instructor_list_urlpattern' %}">
+                        Instructors</a></li>
+            {% endif %}
+
+            {% if perms.courseinfo.view_section %}
+                <li>
+                    <a href="{% url 'courseinfo_section_list_urlpattern' %}">
+                        Sections</a></li>
+            {% endif %}
+
+            {% if perms.courseinfo.view_course %}
+                <li>
+                    <a href="{% url 'courseinfo_course_list_urlpattern' %}">
+                        Courses</a></li>
+            {% endif %}
+
+            {% if perms.courseinfo.view_semester %}
+                <li>
+                    <a href="{% url 'courseinfo_semester_list_urlpattern' %}">
+                        Semesters</a></li>
+            {% endif %}
+
+
+            {% if perms.courseinfo.view_student %}
+                <li>
+                    <a href="{% url 'courseinfo_student_list_urlpattern' %}">
+                        Students</a></li>
+            {% endif %}
+
+
+            {% if perms.courseinfo.view_registration %}
+                <li>
+                    <a href="{% url 'courseinfo_registration_list_urlpattern' %}">
+                        Registrations</a></li>
+            {% endif %}
+
+
+            <li>
+                <a href="{% url 'about_urlpattern' %}">
+                    About</a></li>
+
+        </ul>
+    </nav>
+    <main>
+        {% block content %}
+            <div class="row">
+                <section class="eight columns">
+                    {% block org_content %}
+                        This is default content!
+                    {% endblock %}
+                </section>
+                <section class="desktop four columns">
+                    {% block create_button %}{% endblock %}
+                </section>
+            </div>
+            <div class="row">
+                <div class="twelve columns">
+                    {% block content_footer %}{% endblock %}
+                </div>
+            </div>
+        {% endblock %}
+    </main>
+    {% if is_paginated %}
+        <div class="row">
+            <div class="twelve columns">
+                <ul class="pagination">
+                    {% if first_page_url %}
+                        <li>
+                            <a href="{{ first_page_url }}">
+                                First</a>
+                        </li>
+                    {% endif %}
+                    {% if previous_page_url %}
+                        <li>
+                            <a href="{{ previous_page_url }}">
+                                Previous</a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        Page {{ page_obj.number }}
+                        of {{ paginator.num_pages }}
+                    </li>
+                    {% if next_page_url %}
+                        <li>
+                            <a href="{{ next_page_url }}">
+                                Next</a>
+                        </li>
+                    {% endif %}
+                    {% if last_page_url %}
+                        <li>
+                            <a href="{{ last_page_url }}">
+                                Last</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+</div><!-- container -->
+
+<footer>
+    <p>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License" style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a><br/><span property="dct:title">EZ University Tutorial Examples and Code</span>
+        by
+        <a href="https://www.ligent.net" property="cc:attributionName"
+           rel="cc:attributionURL">Ligent, LLC</a> are licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike
+            4.0 International License</a>.
+    </p>
+    <p>Portions of the EZ University code are based upon code from
+        <a href="https://django-unleashed.com">Django Unleashed</a>,
+        <a href="http://getskeleton.com/">Skeleton</a>, and
+        <a href="https://necolas.github.io/normalize.css/">Normalize.css</a> and
+        are subject to the intellectual property rights restrictions of those works.
+    </p>
+</footer>
+
+</body>
+
+</html>

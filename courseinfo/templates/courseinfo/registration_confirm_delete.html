@@ -1,0 +1,21 @@
+{% extends 'courseinfo/base.html' %}
+
+{% block title %}
+    Delete Registration
+{% endblock %}
+
+{% block content %}
+    <form
+        action="{{ registration.get_delete_url }}"
+        method="post">
+        {% csrf_token %}
+        <p>
+            Are you sure that you want to delete
+            registration {{ registration }}?
+        </p>
+        <a href="{{ registration.get_absolute_url }}"
+            class="button button-primary">
+            Cancel</a>
+        <button type="submit" class="button button-primary">Delete Registration</button>
+    </form>
+{% endblock %}

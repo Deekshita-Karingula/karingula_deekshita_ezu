@@ -1,0 +1,36 @@
+{% extends 'courseinfo/base.html' %}
+
+{% block title %}
+    Student List
+{% endblock %}
+
+{% block create_button %}
+    {% if perms.courseinfo.add_student %}
+    <a
+        href="{% url 'courseinfo_student_create_urlpattern'  %}"
+        class="button button-primary">
+      Create New Student</a>
+    {% endif %}
+{% endblock %}
+
+{% block org_content %}
+  <h2>Student List</h2>
+    {% if perms.courseinfo.add_student %}
+    <div class="mobile">
+      <a
+          href="{% url 'courseinfo_student_create_urlpattern' %}"
+          class="button button-primary">
+        Create New Student</a>
+    </div>
+    {% endif %}
+  <ul>
+    {% for student in student_list %}
+      <li>
+        <a href="{{ student.get_absolute_url }}">
+          {{ student }}</a>
+      </li>
+    {% empty %}
+      <li><em>There are currently no students available.</em></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

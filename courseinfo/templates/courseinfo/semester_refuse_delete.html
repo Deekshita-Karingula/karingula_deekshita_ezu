@@ -1,0 +1,26 @@
+{% extends 'courseinfo/base.html' %}
+
+{% block title %}
+    Error Deleting Semester
+{% endblock %}
+
+{% block content %}
+    <div>
+        <h2>Error Deleting Semester</h2>
+        <p>
+            You may not delete semester {{ semester }}.  This
+            semester currently assigned to the following
+            sections:
+        </p>
+
+        <ul>
+            {% for section in sections %}
+            <li><a href="{{ section.get_absolute_url }}">{{ section }}</a></li>
+            {%  endfor %}
+        </ul>
+
+        <p>
+            Return to <a href="{% url 'courseinfo_semester_list_urlpattern' %}">Semester List</a>.
+        </p>
+    </div>
+{% endblock %}

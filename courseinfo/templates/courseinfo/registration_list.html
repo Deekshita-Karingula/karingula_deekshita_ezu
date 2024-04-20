@@ -1,0 +1,33 @@
+{% extends 'courseinfo/base.html' %}
+
+{% block title %}
+    Registration List
+{% endblock %}
+
+{% block create_button %}
+    {% if perms.courseinfo.add_student %}
+      <a href="{% url 'courseinfo_registration_create_urlpattern' %}"
+         class="button button-primary">
+        Create New Registration</a>
+    {% endif %}
+{% endblock %}
+
+{% block org_content %}
+  <h2>Registration List</h2>
+    {% if perms.courseinfo.add_student %}
+    <div class="mobile">
+      <a href="{% url 'courseinfo_registration_create_urlpattern' %}"
+         class="button button-primary">
+        Create New Registration</a>
+    </div>
+    {% endif %}
+    <ul>
+        {% for registration in registration_list %}
+            <li>
+                <a href="{{ registration.get_absolute_url }}">{{ registration }}</a>
+            </li>
+        {% empty %}
+            <li><em>There are currently no registrations available.</em></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

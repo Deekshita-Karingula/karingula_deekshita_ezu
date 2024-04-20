@@ -1,0 +1,67 @@
+{% extends 'courseinfo/base.html' %}
+
+{% block title %}
+    Section - {{ section }}
+{% endblock %}
+
+{% block content %}
+    <article>
+        <div class="row">
+            <div class="offset-by-two eight columns">
+                <h2>{{ section }}</h2>
+                <ul class="inline">
+                    {% if perms.courseinfo.change_section %}
+                    <li>
+                        <a href="{{ section.get_update_url }}"
+                           class="button button-primary">
+                            Edit Section</a></li>
+                    {% endif %}
+                {% if perms.courseinfo.delete_section %}
+                    <li>
+                        <a href="{{ section.get_delete_url }}"
+                           class="button button-primary">
+                            Delete Section</a></li>
+                {% endif %}
+                </ul>
+
+                   <section>
+        <table>
+            <tr>
+                <th>Course:</th>
+                <td><a href="{{ course.get_absolute_url }}">{{ course }}</a></td>
+            </tr>
+            <tr>
+                <th>Section Name:</th>
+                <td>{{ section.section_name }}</td>
+            </tr>
+            <tr>
+                <th>Semester:</th>
+                <td><a href="{{ semester.get_absolute_url }}">{{ semester }}</a></td>
+            </tr>
+
+            <tr>
+                <th>Instructor:</th>
+                <td><a href="{{ instructor.get_absolute_url }}">{{ instructor }}</a></td>
+            </tr>
+        </table>
+
+    </section>
+
+    <section>
+        <h3>Registrations</h3>
+        <ul>
+            {% for registration in registration_list %}
+                <li>
+                    <a href="{{ registration.get_absolute_url }}">{{ registration.student }}</a>
+                </li>
+            {% empty %}
+                <li><em>There are currently no students registered for this section.</em></li>
+            {% endfor %}
+        </ul>
+    </section>
+
+            </div>
+        </div> <!-- row -->
+
+    </article>
+{% endblock %}

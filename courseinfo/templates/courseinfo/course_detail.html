@@ -1,0 +1,56 @@
+{% extends 'courseinfo/base.html' %}
+
+{% block title %}
+    Course - {{ course }}
+{% endblock %}
+
+{% block content %}
+<article>
+  <div class="row">
+  <div class="offset-by-two eight columns">
+    <h2>{{ course }}</h2>
+    <ul class="inline">
+        {% if perms.courseinfo.change_course %}
+        <li>
+          <a
+              href="{{ course.get_update_url }}"
+              class="button button-primary">
+            Edit Course</a></li>
+        {% endif %}
+        {% if perms.courseinfo.delete_course %}
+        <li>
+          <a
+              href="{{ course.get_delete_url }}"
+              class="button button-primary">
+            Delete Course</a></li>
+        {% endif %}
+    </ul>
+    <section>
+        <table>
+            <tr>
+                <th>Course Number:</th>
+                <td>{{ course.course_number }}</td>
+            </tr>
+            <tr>
+                <th>Course Name:</th>
+                <td>{{ course.course_name }}</td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h3>Sections</h3>
+        <ul>
+            {% for section in section_list %}
+                <li>
+                    <a href="{{ section.get_absolute_url }}">{{ section }}</a>
+                </li>
+            {% empty %}
+                <li><em>There are currently no sections for this course.</em></li>
+            {% endfor %}
+        </ul>
+    </section>
+  </div></div> <!-- row -->
+
+</article>
+{% endblock %}

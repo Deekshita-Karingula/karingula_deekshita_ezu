@@ -1,0 +1,41 @@
+{% extends 'courseinfo/base.html' %}
+
+{% block title %}
+    Registration - {{ registration }}
+{% endblock %}
+
+{% block content %}
+<article>
+  <div class="row">
+  <div class="offset-by-two eight columns">
+    <h2>{{ student }}</h2>
+    <ul class="inline">
+        {% if perms.courseinfo.change_registration %}
+        <li>
+          <a href="{{ registration.get_update_url }}"
+          class="button button-primary">
+            Edit Registration</a></li>
+        {% endif %}
+        {% if perms.courseinfo.delete_registration %}
+          <a href="{{ registration.get_delete_url }}"
+          class="button button-primary">
+            Delete Registration</a></li>
+        {% endif %}
+    </ul>
+    <section>
+        <table>
+            <tr>
+                <th>Student:</th>
+                <td><a href="{{ registration.student.get_absolute_url }}">{{ registration.student }}</a></td>
+            </tr>
+            <tr>
+                <th>Section:</th>
+                <td><a href="{{ registration.section.get_absolute_url }}">{{ registration.section }}</a></td>
+            </tr>
+        </table>
+    </section>
+
+  </div></div> <!-- row -->
+
+</article>
+{% endblock %}

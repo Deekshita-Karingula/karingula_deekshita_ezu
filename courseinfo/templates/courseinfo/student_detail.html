@@ -1,0 +1,60 @@
+{% extends 'courseinfo/base.html' %}
+
+{% block title %}
+    Student - {{ student }}
+{% endblock %}
+
+{% block content %}
+<article>
+  <div class="row">
+  <div class="offset-by-two eight columns">
+    <h2>{{ student }}</h2>
+    <ul class="inline">
+        {% if perms.courseinfo.change_student %}
+        <li>
+          <a href="{{ student.get_update_url }}"
+          class="button button-primary">
+            Edit Student</a></li>
+        {% endif %}
+        {% if perms.courseinfo.delete_student %}
+          <a href="{{ student.get_delete_url }}"
+          class="button button-primary">
+            Delete Student</a></li>
+        {% endif %}
+    </ul>
+    <section>
+        <table>
+            <tr>
+                <th>First Name:</th>
+                <td>{{ student.first_name }}</td>
+            </tr>
+            <tr>
+                <th>Last Name:</th>
+                <td>{{ student.last_name }}</td>
+            </tr>
+            {% if student.disambiguator %}
+                <tr>
+                    <th>Disambiguator:</th>
+                    <td>{{ student.disambiguator }}</td>
+                </tr>
+            {% endif %}
+        </table>
+    </section>
+
+    <section>
+        <h3>Registrations</h3>
+        <ul>
+            {% for registration in registration_list %}
+                <li>
+                    <a href="{{ registration.get_absolute_url }}">{{ registration.section }}</a>
+                </li>
+            {% empty %}
+                <li><em>This student is not currently registered for any sections.</em></li>
+            {% endfor %}
+        </ul>
+    </section>
+
+  </div></div> <!-- row -->
+
+</article>
+{% endblock %}

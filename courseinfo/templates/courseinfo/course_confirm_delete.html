@@ -1,0 +1,21 @@
+{% extends 'courseinfo/base.html' %}
+
+{% block title %}
+    Delete Course
+{% endblock %}
+
+{% block content %}
+    <form
+        action="{{ course.get_delete_url }}"
+        method="post">
+        {% csrf_token %}
+        <p>
+            Are you sure that you want to delete
+            course {{ course }}?
+        </p>
+        <a href="{{ course.get_absolute_url }}"
+            class="button button-primary">
+            Cancel</a>
+        <button type="submit" class="button button-primary">Delete Course</button>
+    </form>
+{% endblock %}
